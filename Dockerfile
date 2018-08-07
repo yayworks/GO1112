@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180730.2145}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180806.2045}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -188,8 +188,11 @@ CMD /usr/local/scripts/update_drivers.sh
 #RUN  chmod +x          /usr/local/expect.sh
 #RUN /bin/bash -x       /usr/local/install_comp.sh
 ADD ./install_cmake.sh /usr/local/install_cmake.sh
-RUN  chmod +x          /usr/local/install_cmake.sh
-RUN /bin/bash -x       /usr/local/install_cmake.sh
+RUN  chmod +x          /usr/local/install_cmake.sh && \
+     /bin/bash -x       /usr/local/install_cmake.sh && \
+     apt-get install -y composer && \
+     composer require google/apiclient:^2.0
+
 #Add AMD AOCC Compilers
 
 #WORKDIR /usr/local
