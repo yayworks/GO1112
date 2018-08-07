@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180807.1530}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180807.1746}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -190,11 +190,12 @@ CMD /usr/local/scripts/update_drivers.sh
 ADD ./install_cmake.sh /usr/local/install_cmake.sh
 RUN  chmod +x          /usr/local/install_cmake.sh && \
      /bin/bash -x       /usr/local/install_cmake.sh
-WORKDIR /home/nimbix
+
 RUN  apt-get install -y composer && \
-     wget -O/tmp/vendor.tar.gz https://s3.amazonaws.com/gen-purpose/vendor.tar.gz && \
-     tar xvfz /tmp/vendor.tar.gz -C /home/nimbix && \
-     rm /tmp/vendor.tar.gz 
+     wget -O/usr/local/vendor.tar.gz https://s3.amazonaws.com/gen-purpose/vendor.tar.gz && \
+     tar xvfz /usr/local/vendor.tar.gz -C /usr/local && \
+     rm /usr/local/vendor.tar.gz
+
      
 
 #Add AMD AOCC Compilers
