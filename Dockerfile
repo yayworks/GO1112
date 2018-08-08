@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180807.1746}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180807.2142}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -219,9 +219,9 @@ RUN  apt-get install -y composer && \
 #    sudo ln -s /usr/local/amd-blis-0.95-beta/lib/libblis.so /usr/lib/libblis.so && \
 #    sudo cp -r /usr/local/amd-blis-0.95-beta/include/blis /usr/include 
 
-RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
-&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
-&&  echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /etc/skel/.bashrc \
+#RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
+#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
+RUN  echo 'export PATH=$PATH:/usr/local/cuda/bin' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/opt/cmake/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/bin' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/lib' >> /etc/skel/.bashrc \
@@ -234,7 +234,8 @@ RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/b
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
-&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
+#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
+&&   echo 'export PYTHONPATH=$PYTHONPATH:/usr/lib/python2.7:/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
    
 
 # Expose port 22 for local JARVICE emulation in docker
