@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180808.1725}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180808.1752}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -209,18 +209,20 @@ RUN  apt-get install -y tcl tcl8.6-dev && \
      
 ENV PYTHONPATH            /usr/lib/python2.7
 WORKDIR /usr/local
-RUN  git clone https://github.com/edf-hpc/unclebench.git 
-RUN     cd unclebench 
-RUN     python setup.py install --user
-RUN     mkdir lib 
-RUN     cp -r ubench/plugins lib 
-RUN     cd /usr/local
-RUN     chown -R nimbix.nimbix /usr/local/unclebench 
-RUN     wget -O/tmp/JUBE-2.2.1.tar.gz  https://s3.amazonaws.com/gen-purpose/JUBE-2.2.1.tar.gz 
-RUN     cd /tmp 
-RUN     tar xvfz JUBE-2.2.1.tar.gz
-RUN     cd JUBE-2.2.1
-RUN     python setup.py install --user 
+RUN  pip install clustershell && \
+     pip install PyYAML && \
+     git clone https://github.com/edf-hpc/unclebench.git && \
+     cd unclebench && \
+     python setup.py install --user && \
+     mkdir lib && \
+     cp -r ubench/plugins lib && \
+     cd /usr/local && \
+     chown -R nimbix.nimbix /usr/local/unclebench && \
+     wget -O/tmp/JUBE-2.2.1.tar.gz  https://s3.amazonaws.com/gen-purpose/JUBE-2.2.1.tar.gz && \
+     cd /tmp && \
+     tar xvfz JUBE-2.2.1.tar.gz && \
+     cd JUBE-2.2.1 && \
+     python setup.py install --user 
 
      
 
