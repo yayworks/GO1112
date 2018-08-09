@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180808.2025}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180808.2215}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -227,7 +227,7 @@ USER nimbix
 RUN  cd /usr/share/JUBE-2.2.1 && \
      python setup.py install --user 
 
-     
+
 
 #Add AMD AOCC Compilers
 
@@ -249,6 +249,8 @@ RUN  cd /usr/share/JUBE-2.2.1 && \
 #    sudo ln -s /usr/local/amdlibm-3.2.1/lib/dynamic/libamdlibm.so /usr/lib/libamdlibm.so && \
 #    sudo ln -s /usr/local/amd-blis-0.95-beta/lib/libblis.so /usr/lib/libblis.so && \
 #    sudo cp -r /usr/local/amd-blis-0.95-beta/include/blis /usr/include 
+
+USER root
 
 #RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
 #&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
