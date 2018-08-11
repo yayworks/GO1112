@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180810.1700}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180811.1620}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -52,6 +52,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get install -y python-qt4 && \ 
     apt-get install -y nodejs-legacy && \
     apt-get install -y npm && \
+    apt-get install -y asciidoctor && \
+    apt-get install -y bc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -206,7 +208,6 @@ RUN  apt-get install -y tcl tcl8.6-dev && \
      ./configure --with-module-path=/modules/ && \
      make && \
      make install && \
-     apt-get install -y asciidoctor && \
      apt-get install -y python-virtualenv
      
 #ENV PYTHONPATH            /usr/lib/python2.7
@@ -223,7 +224,25 @@ RUN  pip install clustershell && \
      wget -O/tmp/JUBE-2.2.1.tar.gz  https://s3.amazonaws.com/gen-purpose/JUBE-2.2.1.tar.gz && \
      cd /tmp && \
      tar xvfz JUBE-2.2.1.tar.gz -C /usr/share && \
-     chown -R nimbix.nimbix /usr/share/JUBE-2.2.1
+     chown -R nimbix.nimbix /usr/share/JUBE-2.2.1 
+RUN  cd /tmp && \
+     git clone https://github.com/xianyi/OpenBLAS.git && \
+     cd OpenBLAS && \
+     make TARGET=SANDYBRIDGE && \
+     make install PREFIX=/opt/OpenBLAS/SDB && \
+     cd /tmp && \
+     rm -rf OpenBLAS && \
+     git clone https://github.com/xianyi/OpenBLAS.git && \
+     cd OpenBLAS && \
+     make TARGET=HASWELL && \
+     make install PREFIX=/opt/OpenBLAS/HSW && \
+     cd /tmp && \
+     rm -rf OpenBLAS && \
+     git clone https://github.com/xianyi/OpenBLAS.git && \
+     cd OpenBLAS && \
+     make TARGET=SKYLAKEX && \
+     make install PREFIX=/opt/OpenBLAS/SKL
+    
 
 USER nimbix
 RUN  cd /usr/share/JUBE-2.2.1 && \
