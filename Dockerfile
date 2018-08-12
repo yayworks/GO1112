@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180812.1630}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180812.1733}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -148,11 +148,11 @@ RUN chmod +x /usr/local/config.sh && chown nimbix.nimbix /usr/local/config.sh &&
 #    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
 #    rm rstudio-server-1.1.442-amd64.deb 
 
-RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
-    sudo apt-get update && \
-    sudo apt-get install -y octave && \
-    sudo apt-get build-dep -y octave && \
-    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
+#RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
+#    sudo apt-get update && \
+#    sudo apt-get install -y octave && \
+#    sudo apt-get build-dep -y octave && \
+#    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
 #RUN sudo apt-get update && \
 #    sudo apt-get install -y scilab && \
@@ -273,7 +273,7 @@ RUN  echo 'export PATH=$PATH:/usr/local/cuda/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
 #&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
