@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1330}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1630}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -53,6 +53,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get install -y nodejs-legacy && \
     apt-get install -y npm && \
     apt-get install -y asciidoctor && \
+    apt-get install -y autoconf && \
     apt-get install -y bc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
