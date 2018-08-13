@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.0914}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1110}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -230,12 +230,12 @@ RUN  cd /tmp && \
      cd OpenBLAS && \
      make TARGET=SANDYBRIDGE && \
      make install PREFIX=/opt/OpenBLAS/SDB 
-RUN  cd /tmp && \
-     rm -rf OpenBLAS && \
-     git clone https://github.com/xianyi/OpenBLAS.git && \
-     cd OpenBLAS && \
-     make TARGET=HASWELL && \
-     make install PREFIX=/opt/OpenBLAS/HSW 
+#RUN  cd /tmp && \
+#     rm -rf OpenBLAS && \
+#     git clone https://github.com/xianyi/OpenBLAS.git && \
+#     cd OpenBLAS && \
+#     make TARGET=HASWELL && \
+#     make install PREFIX=/opt/OpenBLAS/HSW 
      
 
 USER nimbix
@@ -279,6 +279,7 @@ RUN  echo 'export PATH=$PATH:/usr/local/cuda/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
+&&  echo 'export LD_LIBRARY_PATH=/opt/OpneBLAS/SDB/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
