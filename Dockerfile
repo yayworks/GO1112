@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1110}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1330}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -225,22 +225,27 @@ RUN  pip install clustershell && \
      cd /tmp && \
      tar xvfz JUBE-2.2.1.tar.gz -C /usr/share && \
      chown -R nimbix.nimbix /usr/share/JUBE-2.2.1 
-RUN  cd /tmp && \
-     git clone https://github.com/xianyi/OpenBLAS.git && \
-     cd OpenBLAS && \
-     make TARGET=SANDYBRIDGE && \
-     make install PREFIX=/opt/OpenBLAS/SDB 
+#RUN  cd /tmp && \
+#     git clone https://github.com/xianyi/OpenBLAS.git && \
+#     cd OpenBLAS && \
+#     make TARGET=SANDYBRIDGE && \
+#     make install PREFIX=/opt/OpenBLAS/SDB 
 #RUN  cd /tmp && \
 #     rm -rf OpenBLAS && \
 #     git clone https://github.com/xianyi/OpenBLAS.git && \
 #     cd OpenBLAS && \
 #     make TARGET=HASWELL && \
 #     make install PREFIX=/opt/OpenBLAS/HSW 
+RUN   wget -O/tmp/OpenBLAS_SDB.tar.gz https://s3.amazonaws.com/gen-purpose/OpenBLAS_SDB.tar.gz && \
+      wget -O/tmp/OpenBLAS_HSW.tar.gz https://s3.amazonaws.com/gen-purpose/OpenBLAS_HSW.tar.gz && \
+      cd /tmp && \
+      tar xvfpz OpenBLAS_SDB.tar.gz -C /opt && \
+      tar xvfpz OpenBLAS_HSW.tar.gz -C /opt
      
 
-USER nimbix
-RUN  cd /usr/share/JUBE-2.2.1 && \
-     python setup.py install --user 
+#USER nimbix
+#RUN  cd /usr/share/JUBE-2.2.1 && \
+#     python setup.py install --user 
 
 
 
@@ -279,7 +284,7 @@ RUN  echo 'export PATH=$PATH:/usr/local/cuda/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
-&&  echo 'export LD_LIBRARY_PATH=/opt/OpneBLAS/SDB/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
+&&  echo 'export LD_LIBRARY_PATH=/opt/OpenBLAS/SDB/lib:/opt/OpenBLAS/HSW/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
