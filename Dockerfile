@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180812.2023}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.0914}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -229,8 +229,8 @@ RUN  cd /tmp && \
      git clone https://github.com/xianyi/OpenBLAS.git && \
      cd OpenBLAS && \
      make TARGET=SANDYBRIDGE && \
-     make install PREFIX=/opt/OpenBLAS/SDB && \
-     cd /tmp && \
+     make install PREFIX=/opt/OpenBLAS/SDB 
+RUN  cd /tmp && \
      rm -rf OpenBLAS && \
      git clone https://github.com/xianyi/OpenBLAS.git && \
      cd OpenBLAS && \
