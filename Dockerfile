@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180813.1630}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180817.2200}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -243,7 +243,18 @@ RUN   wget -O/tmp/OpenBLAS_SDB.tar.gz https://s3.amazonaws.com/gen-purpose/OpenB
       tar xvfpz OpenBLAS_SDB.tar.gz -C /opt && \
       tar xvfpz OpenBLAS_HSW.tar.gz -C /opt
      
-
+RUN   apt-get install -y doxygen && \
+      apt-get install -y swig && \
+      apt-get install -y libperl-dev && \
+      git clone https://github.com/cooperative-computing-lab/cctools cctools-source && \
+      cd cctools-source && \
+      ./configure --prefix /usr/share/cctools --with-zlib-path /usr/lib && \
+      make && \
+      make install && \
+      cd ../ && \
+      rm -rf cctools-source
+RUN   pip install cherrypy
+      
 #USER nimbix
 #RUN  cd /usr/share/JUBE-2.2.1 && \
 #     python setup.py install --user 
@@ -284,6 +295,7 @@ RUN  echo 'export PATH=$PATH:/usr/local/cuda/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
+&&  echo 'export PATH=/usr/share/cctools/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/opt/OpenBLAS/SDB/lib:/opt/OpenBLAS/HSW/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
