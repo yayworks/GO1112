@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180817.2200}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180818.1434}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -253,7 +253,8 @@ RUN   apt-get install -y doxygen && \
       make install && \
       cd ../ && \
       rm -rf cctools-source
-RUN   pip install cherrypy
+RUN   apt-get install -y python3-pip && \
+      pip3 install cherrypy
       
 #USER nimbix
 #RUN  cd /usr/share/JUBE-2.2.1 && \
